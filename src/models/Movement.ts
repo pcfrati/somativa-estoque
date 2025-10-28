@@ -41,7 +41,6 @@ const movementSchema = new mongoose.Schema(
   }
 );
 
-// Índices para melhor performance
 movementSchema.index({ product: 1, createdAt: -1 });
 movementSchema.index({ createdAt: -1 });
 

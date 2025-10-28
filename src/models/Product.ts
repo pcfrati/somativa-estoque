@@ -45,7 +45,6 @@ const productSchema = new mongoose.Schema(
   }
 );
 
-// Índice para busca eficiente
 productSchema.index({ sku: 1 });
 productSchema.index({ currentQuantity: 1 });
 
