@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
 
     console.log("Tentativa de registro:", { name, email, role });
 
-    // Validações básicas
+    // Validações
     if (!name || !email || !password) {
       return NextResponse.json(
         { error: "Nome, email e senha são obrigatórios" },

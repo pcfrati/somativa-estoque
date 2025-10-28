@@ -119,7 +119,7 @@ export async function POST(request: NextRequest) {
       notes: notes || "",
     });
 
-    // Buscar movimentação com dados populados
+    // Buscar movimentação
     const populatedMovement = await Movement.findById(movement._id)
       .populate("product", "name sku")
       .populate("operator", "name");
