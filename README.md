@@ -150,7 +150,45 @@ Movement {
 
 ### 🎨 **Protótipos**
 
-#### Figma:
+#### Telas Principais:
+
+**1. Login**
+```
+[ LOGIN ]
+Email: [___________]
+Senha: [___________]
+[ ENTRAR ]
+```
+
+**2. Dashboard**
+```
+[ DASHBOARD ]
+📦 Total Produtos: 25
+⚠️  Estoque Baixo: 3
+📊 Estoque Total: 450
+
+[PRODUTOS COM ESTOQUE BAIXO]
+- Caneta Azul (5/10)
+- Papel A4 (2/5)
+```
+
+**3. Produtos**
+```
+[ PRODUTOS ] [NOVO PRODUTO]
+
+Nome          SKU         Estoque  Mínimo  Status
+Caneta Azul   CAN-AZ-001   5        10      ⚠️
+Papel A4      PAP-A4-001   50       20      ✅
+```
+
+**4. Movimentações**
+```
+[ MOVIMENTAÇÕES ] [NOVA MOVIMENTAÇÃO]
+
+Data         Produto        Tipo     Qtd  Operador
+01/12/2023  Caneta Azul    Entrada   50   João
+30/11/2023  Papel A4       Saída     5    Maria
+```
 
 ### ⚠️ **Análise de Riscos**
 
@@ -199,12 +237,5 @@ npm run dev
    - Acesse `/register`
    - Crie um usuário gestor
    - Comece cadastrando produtos
-
-### 📞 **Suporte**
-
-**Desenvolvido por:** [Seu Nome]  
-**Tempo de Desenvolvimento:** 1-2 semanas  
-**Stack:** Next.js, MongoDB, TypeScript  
-**Versão:** 1.0.0 (MVP)
 
 ---
