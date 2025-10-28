@@ -224,8 +224,8 @@ npm install
 2. **Configuração:**
 ```bash
 # .env.local
-DATABASE_URL=mongodb://localhost:27017/estoque
-JWT_SECRET=chave_secreta
+DATABASE_URL=mongodb://localhost:27017/formativa-sgm-castelloB
+JWT_SECRET=MINHA_CHAVE_SECRETA
 ```
 
 3. **Executar:**
