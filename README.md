@@ -145,7 +145,10 @@ classDiagram
 
 flowchart TD
     A[Início] --> B[Usuário faz login]
-    B --> C[Acessa Movimentações]
+    B -->|Login válido| C[Acessa Movimentações]
+    B -->|Erro no login| M[Exibe erro de login]
+    M --> B[Usuário tenta login novamente]
+
     C --> D[Seleciona produto e tipo]
     D --> E[Informa quantidade]
     E --> F{Tipo é saída?}
@@ -154,6 +157,8 @@ flowchart TD
     G --> I{Estoque suficiente?}
     I -->|Sim| H
     I -->|Não| J[Exibe erro: Estoque insuficiente]
+    J --> E[Usuário corrige quantidade]
+
     H --> K[Atualiza estoque do produto]
     K --> L[Fim]
 
