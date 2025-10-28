@@ -91,104 +91,78 @@ Sistema web simples que oferece:
 ### 📊 **Diagramas**
 
 #### Diagrama de Casos de Uso
-```
-┌─────────────────┐
-│   Sistema de    │
-│  Controle de    │
-│    Estoque      │
-└─────────────────┘
-        │
-        ├─── Gestor ──────┐
-        │  - Cadastrar produto
-        │  - Editar produto
-        │  - Ver relatórios
-        │
-        └─── Operador ────┐
-           - Registrar entrada
-           - Registrar saída
-           - Ver produtos
+```mermaid
+
+flowchart TD
+    A([Gestor]) --> B[(Cadastrar produto)]
+    A --> C[(Editar produto)]
+    A --> D[(Ver relatórios)]
+
+    E([Operador]) --> F[(Registrar entrada)]
+    E --> G[(Registrar saída)]
+    E --> H[(Ver produtos)]
+
+    B & C & D & F & G & H --> I[[Sistema de Controle de Estoque]]
+
 ```
 
-#### Diagrama de Classes Simplificado
-```typescript
-User {
-  +_id: ObjectId
-  +name: string
-  +email: string
-  +password: string
-  +role: "gestor" | "operador"
-}
+#### Diagrama de Classes
+```mermaid
 
-Product {
-  +_id: ObjectId
-  +name: string
-  +sku: string
-  +minQuantity: number
-  +currentQuantity: number
-}
+classDiagram
+    class User {
+        +ObjectId _id
+        +string name
+        +string email
+        +string password
+        +string role ("gestor" | "operador")
+    }
 
-Movement {
-  +_id: ObjectId
-  +product: Product
-  +type: "entrada" | "saida"
-  +quantity: number
-  +operator: User
-  +createdAt: Date
-}
+    class Product {
+        +ObjectId _id
+        +string name
+        +string sku
+        +number minQuantity
+        +number currentQuantity
+    }
+
+    class Movement {
+        +ObjectId _id
+        +Product product
+        +string type ("entrada" | "saida")
+        +number quantity
+        +User operator
+        +Date createdAt
+    }
+
+    User "1" --> "*" Movement : realiza
+    Product "1" --> "*" Movement : movimentado
+
 ```
 
 #### Fluxo de Movimentação
-```
-1. Usuário faz login
-2. Acessa "Movimentações"
-3. Seleciona produto e tipo
-4. Informa quantidade
-5. Sistema valida estoque (se saída)
-6. Registra movimentação
-7. Atualiza estoque do produto
+```mermaid
+
+flowchart TD
+    A[Início] --> B[Usuário faz login]
+    B --> C[Acessa Movimentações]
+    C --> D[Seleciona produto e tipo]
+    D --> E[Informa quantidade]
+    E --> F{Tipo é saída?}
+    F -->|Sim| G[Valida se há estoque suficiente]
+    F -->|Não| H[Registra movimentação]
+    G --> I{Estoque suficiente?}
+    I -->|Sim| H
+    I -->|Não| J[Exibe erro: Estoque insuficiente]
+    H --> K[Atualiza estoque do produto]
+    K --> L[Fim]
+
 ```
 
-### 🎨 **Protótipos**
+### 🎨 **Prototipagem**
 
-#### Telas Principais:
-
-**1. Login**
-```
-[ LOGIN ]
-Email: [___________]
-Senha: [___________]
-[ ENTRAR ]
-```
-
-**2. Dashboard**
-```
-[ DASHBOARD ]
-📦 Total Produtos: 25
-⚠️  Estoque Baixo: 3
-📊 Estoque Total: 450
-
-[PRODUTOS COM ESTOQUE BAIXO]
-- Caneta Azul (5/10)
-- Papel A4 (2/5)
-```
-
-**3. Produtos**
-```
-[ PRODUTOS ] [NOVO PRODUTO]
-
-Nome          SKU         Estoque  Mínimo  Status
-Caneta Azul   CAN-AZ-001   5        10      ⚠️
-Papel A4      PAP-A4-001   50       20      ✅
-```
-
-**4. Movimentações**
-```
-[ MOVIMENTAÇÕES ] [NOVA MOVIMENTAÇÃO]
-
-Data         Produto        Tipo     Qtd  Operador
-01/12/2023  Caneta Azul    Entrada   50   João
-30/11/2023  Papel A4       Saída     5    Maria
-```
+#### Figma:
+[Protótipos](https://www.figma.com/design/zaL1U95K7PtMpc8BT72kTS/Estoque?node-id=1-186&t=jNGUpN6rsWZ7dyui-1)
 
 ### ⚠️ **Análise de Riscos**
 
@@ -203,15 +177,43 @@ Data         Produto        Tipo     Qtd  Operador
 ### 📁 **Estrutura do Projeto**
 ```
 src/
-├── app/                    # Páginas do Next.js
-│   ├── login/page.tsx
-│   ├── dashboard/page.tsx
-│   ├── products/page.tsx
-│   ├── movements/page.tsx
-│   └── api/               # APIs
-├── components/            # Componentes reutilizáveis
-├── models/               # Modelos do MongoDB
-└── lib/                  # Utilitários
+├─ app/
+│  ├─ api/
+│  │  ├─ auth/
+│  │  │  ├─ login/
+│  │  │  │  └─ route.ts
+│  │  │  └─ register/
+│  │  │     └─ route.ts
+│  │  ├─ movements/
+│  │  │  └─ route.ts
+│  │  └─ products/
+│  │     └─ route.ts
+│  ├─ dashboard/
+│  │  └─ page.tsx
+│  ├─ login/
+│  │  └─ page.tsx
+│  ├─ movements/
+│  │  └─ page.tsx
+│  ├─ products/
+│  │  └─ page.tsx
+│  ├─ register/
+│  │  ├─ page.tsx
+│  │  ├─ favicon.ico
+│  │  ├─ globals.css
+│  │  ├─ layout.tsx
+│  │  └─ page.module.css
+├─ components/
+│  ├─ Header.tsx
+│  ├─ MovementForm.tsx
+│  ├─ ProductForm.tsx
+│  └─ ProductList.tsx
+├─ lib/
+│  ├─ auth.ts
+│  └─ dbConnect.ts
+└── models/
+    ├── Movement.ts
+    ├── Product.ts
+    └── User.ts
 ```
 
 ### 🚀 **Como Usar**
