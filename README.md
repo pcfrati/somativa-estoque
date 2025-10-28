@@ -140,7 +140,7 @@ classDiagram
 
 ```
 
-#### Fluxo de Movimentação
+#### Diagrama de Fluxo
 ```mermaid
 
 flowchart TD
